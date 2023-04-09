@@ -11,82 +11,183 @@ namespace application
     {
         public static void Main(string[] args)
         {
-            
-           string[] names = new string[5];
-             string[] passwords = new string[5];
+            string bankPolicy = "HBL as part of the The League Management Trainee Programme in 2017 and was placed in Human Resources. The rigorous Professional Development and Customized Learning & Development opportunities provided as part of the programme offer unparalleled learning opportunities. This has made my transition to the corporate world smooth and exciting.";
+            string[] names = new string[5];
+            string[] passwords = new string[5];
             string path = "C:\\OOP week 1\\week1 pd\\user.txt";
+            string mpath = "C:\\OOP week 1\\week1 pd\\manager.txt";
             string ctach;
+            string receive;
+            string manageru="manager";
+            string managerp="123789";
+            string u;
+            string p;
+            string c;
             readData(path, names, passwords);
-            ctach = menuBar();
-            while (true)
+            ReadManagerlogInData( mpath, ref manageru, ref managerp);
+            receive = checkuser();
+            if (receive == "user")
             {
-                if (ctach == "1")
+                ctach = menuBar();
+                while (true)
                 {
-                    int back = 0;
-                    Console.Clear();
-                    SignUp(names, passwords, path);
-                    while (back != 4)
+                    if (ctach == "1")
                     {
-                        Console.WriteLine("Enter 4 to go back!!!!");
-                        back = int.Parse(Console.ReadLine());
-                        if (back != 4)
+                        int back = 0;
+                        Console.Clear();
+                        SignUp(names, passwords, path);
+                        while (back != 4)
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid Input!!!!");
-                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("Enter 4 to go back!!!!");
+                            back = int.Parse(Console.ReadLine());
+                            if (back != 4)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Invalid Input!!!!");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                        }
+                        if (back == 4)
+                        {
+                            Console.Clear();
+                            ctach = menuBar();
+
                         }
                     }
-                    if (back == 4)
+                    if (ctach == "2")
                     {
+
                         Console.Clear();
-                        ctach = menuBar();
-
-                    }
-                }
-                if (ctach == "2")
-                {
-
-                    Console.Clear();
-                    int back = 0;
-                    bool check;
-                    check = SignIn(names, passwords, path);
-                    if (check == true)
-                    {
-                        Console.WriteLine("Success!!!!");
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Invalid username or password!!!!");
-                        Console.ForegroundColor = ConsoleColor.Black;
-                    }
-                    while (back != 4)
-                    {
-                        Console.WriteLine("Enter 4 to go back!!!!");
-                        back = int.Parse(Console.ReadLine());
-                        if (back != 4)
+                        int back = 0;
+                        bool check;
+                        check = SignIn(names, passwords, path);
+                        if (check == true)
+                        {
+                            Console.WriteLine("Success!!!!");
+                        }
+                        else
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid Input!!!!");
+                            Console.WriteLine("Invalid username or password!!!!");
                             Console.ForegroundColor = ConsoleColor.Black;
                         }
+                        while (back != 4)
+                        {
+                            Console.WriteLine("Enter 4 to go back!!!!");
+                            back = int.Parse(Console.ReadLine());
+                            if (back != 4)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Invalid Input!!!!");
+                                Console.ForegroundColor = ConsoleColor.Black;
+                            }
+                        }
+                        if (back == 4)
+                        {
+                            Console.Clear();
+                            ctach = menuBar();
+
+                        }
                     }
-                    if (back == 4)
+                    if (ctach == "3")
+                    {
+                        break;
+                    }
+                    Console.ReadKey();
+                }
+            }
+      
+                if (receive == "manager")
+                {
+                    Console.Clear();
+                    c = managerLogInMenu();
+                    if (c == "1")
                     {
                         Console.Clear();
-                        ctach = menuBar();
+                        Console.WriteLine("Enter username!!!!");
+                        u = Console.ReadLine();
+                        Console.WriteLine("Enter password!!!!");
+                        p = Console.ReadLine();
+
+                        if (u == manageru && p == managerp)
+                        {
+                            storeManagerLoginRecord(u, p, mpath);
+                            Console.Clear();
+                            while (true)
+                            {
+                                Console.Clear();
+                                string r;
+                                r = managermenubar();
+                                if (r == "1")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine(bankPolicy);
+                                    Console.ReadKey();
+                                }
+                                if (r == "2")
+                                {
+                                    Console.Clear();
+                                    string m;
+                                    Console.WriteLine("Enter old username!!!!");
+                                    m = Console.ReadLine();
+                                    if (m == manageru)
+                                    {
+                                        Console.WriteLine("Enter new username!!!!");
+                                        manageru = Console.ReadLine();
+                                        storeManagerLoginRecord(manageru, managerp, mpath);
+                                    }
+                                }
+                                if (r == "3")
+                                {
+                                    Console.Clear();
+                                    string m;
+                                    Console.WriteLine("Enter old password!!!!");
+                                    m = Console.ReadLine();
+                                    if (m == managerp)
+                                    {
+                                        Console.WriteLine("Enter new password!!!!");
+                                        managerp = Console.ReadLine();
+                                        storeManagerLoginRecord(manageru, managerp, mpath);
+                                    }
+                                }
+                                if(r=="4")
+                                {
+                                  break;
+                                }
+                            }
+                        }
+                        else if (u != manageru || p != managerp)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid username or password!!!!");
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            c = managerLogInMenu();
+                        }
 
                     }
-                }
-                if (ctach == "3")
+                if (c == "2")
                 {
-                    break;
+                    Console.WriteLine("Thanks for using our application!!!!");
                 }
-                Console.ReadKey();
+            }
+       
+            else
+            {
+                Console.WriteLine("Invalid Input!!!!");
+                Console.Clear();
+                receive = checkuser();
             }
             Console.Clear();
             Console.WriteLine("Thanks for using our application!!!!");
             Console.ReadKey();
+        }
+        static string checkuser()
+        {
+            Console.Clear();
+            string option;
+            Console.WriteLine("Are you manager or a user?");
+            option = Console.ReadLine();
+            return option;
         }
         static string menuBar()
         {
@@ -225,6 +326,45 @@ namespace application
             }
             file1.Flush();
             file1.Close();
+        }
+        static void storeManagerLoginRecord(string u , string p,string mpath)
+        {
+            StreamWriter file2 = new StreamWriter(mpath, false);
+            file2.WriteLine(u + "," + p);
+            file2.Flush();
+            file2.Close();
+        }
+        static void ReadManagerlogInData(string mpath, ref string manageru, ref string managerp)
+        {
+            if (File.Exists(mpath))
+            {
+                StreamReader filevariable = new StreamReader(mpath);
+                string record;
+                record = filevariable.ReadLine();
+                manageru = ParseData(record, 1);
+                managerp = ParseData(record, 2);
+                filevariable.Close();
+            }
+        }
+        static string managerLogInMenu()
+        {
+            Console.Clear();
+            string option;
+            Console.WriteLine("1:Sign In!!!!!");
+            Console.WriteLine("2:Exit");
+            Console.WriteLine("Enter your option!!!!");
+            option = Console.ReadLine();
+            return option;
+        }
+        static string managermenubar()
+        {
+            string option;
+            Console.WriteLine("1.See policy!!!!");
+            Console.WriteLine("2.Change usernam!!!!");
+            Console.WriteLine("3.Change password!!!!");
+            Console.WriteLine("4.Exit!!!!");
+            option = Console.ReadLine();
+            return option;
         }
     }
 }
